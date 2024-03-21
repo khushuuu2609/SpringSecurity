@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Optional;
 
 @Service
 public class ShopNotificationServiceImpl implements ShopNotificationService {
@@ -68,6 +67,8 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
                 notification.setTitle(userName);
                 notification.setDescription(notificationDto.getDescription());
                 notification.setShopId(shop);
+                notification.setCategories(shopDto.getCategories());
+                notification.setPhoto(shopDto.getPhoto().getBytes());
 
                 notificationRepository.save(notification);
 
@@ -79,6 +80,6 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception as needed
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process the photo");
-        }
+    }
     }
 }

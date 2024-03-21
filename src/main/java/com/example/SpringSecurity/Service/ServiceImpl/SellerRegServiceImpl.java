@@ -34,8 +34,6 @@ public class SellerRegServiceImpl implements SellerRegService {
             sellerReg.setDescription(sellerRegDto.getDescription());
             sellerReg.setId(user);
 
-            session.setAttribute("sellerId", sellerReg.getSellerId());
-
             sellerRepository.save(sellerReg);
             return ResponseEntity.ok("Successfully Saved");
         }

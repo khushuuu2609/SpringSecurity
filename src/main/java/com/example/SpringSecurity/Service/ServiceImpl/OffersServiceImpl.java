@@ -11,6 +11,7 @@ import com.example.SpringSecurity.Repository.ShopRepository;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.OffersService;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.Base64;
 
+@Slf4j
 @Service
 public class OffersServiceImpl implements OffersService {
 
@@ -49,26 +51,27 @@ public class OffersServiceImpl implements OffersService {
                 User user = userRepository.findById(id).orElseThrow();
                 user.setId(id);
 
-                // Convert ShopDto to Shop entity
-                Offers offer = new Offers();
-                offer.setPhoto(base64Photo.getBytes());
-                offer.setCategories(offerDto.getCategories());
-                offer.setDescription(offerDto.getDescription());
-                offer.setPrice(offerDto.getPrice());
 
-                Long sellerId = (Long) session.getAttribute("sellerId");
-                Long shopId = (Long) session.getAttribute("shopId");
 
-                SellerReg seller = sellerRepository.findById(sellerId).orElseThrow();
-                Shop shop = shopRepository.findById(shopId).orElseThrow();
+                SellerReg seller = sellerRepository.findByUserId(id);
+//                Shop shop = shopRepository.findById(shopId).orElseThrow();
 
-                offer.setSeller(seller);
-                offer.setShop(shop);
+                if(seller != null) {
+                    // Convert ShopDto to Shop entity
+                    Offers offer = new Offers();
+                    offer.setPhoto(base64Photo.getBytes());
+                    offer.setCategories(offerDto.getCategories());
+                    offer.setDescription(offerDto.getDescription());
+                    offer.setPrice(offerDto.getPrice());
+                    offer.setSeller(seller);
+//                    offer.setShop(shop);
 
-                System.out.println(offer.getSeller());
-
-                // Save the shop in the database
-                offerRepository.save(offer);
+                    // Save the shop in the database
+                    offerRepository.save(offer);
+                }
+                else{
+                    log.error("seller is null");
+                }
             }
             return ResponseEntity.ok("Product was offered by seller");
 

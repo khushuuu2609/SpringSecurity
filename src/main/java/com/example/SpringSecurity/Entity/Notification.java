@@ -17,8 +17,19 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long NotifyId;
 
+    @Lob
+    @Column(name = "photo", columnDefinition = "LONGBLOB")
+    private byte[] photo;
+
+    @Column
     private String title;
+
+    @Column
     private String description;
+
+    @Column
+    private String categories;
+
 
     @OneToOne
     @JoinColumn(name="shopId",referencedColumnName = "shopid")

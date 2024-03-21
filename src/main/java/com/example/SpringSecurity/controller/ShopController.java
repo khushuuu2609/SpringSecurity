@@ -26,4 +26,6 @@ public class ShopController {
         shopNotificationService.placeOrder(shopDto, notificationDto,session);
         return  ResponseEntity.ok("order is placed successfully");
     }
+
+
 }
