@@ -21,8 +21,13 @@ public class Shop {
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
 
+    @Column(nullable = false)
     private String categories;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private String status;
 
     @ManyToOne

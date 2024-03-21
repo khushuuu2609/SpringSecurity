@@ -17,8 +17,20 @@ public class SellerReg {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sellerId;
 
+    @Column(nullable = false)
     private String[] categories;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String pin_code;
+
+    @Column(nullable = false)
+    private String area_name;
 
     @OneToOne
     @JoinColumn(name="user_id",referencedColumnName = "id")

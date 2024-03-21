@@ -21,13 +21,13 @@ public class Notification {
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String description;
 
-    @Column
+    @Column(nullable = false)
     private String categories;
 
 

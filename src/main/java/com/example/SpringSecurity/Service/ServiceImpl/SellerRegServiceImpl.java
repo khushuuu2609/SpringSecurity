@@ -32,6 +32,9 @@ public class SellerRegServiceImpl implements SellerRegService {
             SellerReg sellerReg = new SellerReg();
             sellerReg.setCategories(sellerRegDto.getCategories());
             sellerReg.setDescription(sellerRegDto.getDescription());
+            sellerReg.setArea_name(sellerRegDto.getArea_name());
+            sellerReg.setPin_code(sellerRegDto.getPin_code());
+            sellerReg.setCity(sellerRegDto.getCity());
             sellerReg.setId(user);
 
             sellerRepository.save(sellerReg);
