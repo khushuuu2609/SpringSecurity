@@ -86,6 +86,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         session.setAttribute("username", member.getUsername());
         session.setAttribute("role",member.getRole());
         return JwtAuthenticationResponse.builder().token(jwt).
-                userId(String.valueOf(member.getId())).role(member.getRole()).build();
+                userId(member.getId()).role(member.getRole()).build();
     }
 }

@@ -16,7 +16,7 @@ public class JwtAuthenticationResponse {
 
     private String token;
     private String error;
-    private String userId;
+    private long userId;
 
     @Enumerated(EnumType.STRING)
     private Role role;
