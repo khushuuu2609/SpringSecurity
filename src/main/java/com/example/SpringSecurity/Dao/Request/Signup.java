@@ -22,6 +22,7 @@ public class Signup {
     private String pin_code;
     private String address;
     private String city;
+    private String area_name;
     private Role role;
 }
 

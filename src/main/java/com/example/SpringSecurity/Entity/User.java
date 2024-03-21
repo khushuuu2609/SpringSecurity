@@ -46,6 +46,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String city;
 
+    @Column(nullable = false)
+    private String area_name;
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

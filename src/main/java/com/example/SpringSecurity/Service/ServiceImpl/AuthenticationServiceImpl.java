@@ -62,6 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .confirmPassword(passwordEncoder.encode(request.getConfirmPassword()))
                 .pin_code(request.getPin_code())
                 .address(request.getAddress())
+                .area_name(request.getArea_name())
                 .city(request.getCity())
                 .role(Role.USER)
                 .build();
@@ -83,6 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwt = jwtService.generateToken(member);
         session.setAttribute("userId", member.getId());
         session.setAttribute("username", member.getUsername());
-        return JwtAuthenticationResponse.builder().token(jwt).userId(String.valueOf(member.getId())).build();
+        session.setAttribute("role",member.getRole());
+        return JwtAuthenticationResponse.builder().token(jwt).userId(String.valueOf(member.getId())).userId(String.valueOf(member.getRole())).build();
     }
 }
