@@ -38,13 +38,8 @@ public class ProfileController {
         }
     }
 
-//    @GetMapping("/{id}")
-//    public User getUserById(@PathVariable Long id) {
-//        return userService.getUserById(id);
-//    }
-
-    @GetMapping("/{email}")
-    public User findByEmail(@PathVariable String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 }
