@@ -15,4 +15,6 @@ public interface UserService {
     Boolean updateToSeller(Long id);
 
     User findByEmail(String email);
+
+    User getByEmail(String email);
 }

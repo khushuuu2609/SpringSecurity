@@ -1,6 +1,5 @@
 package com.example.SpringSecurity.Service.ServiceImpl;
 
-import com.example.SpringSecurity.Dao.JwtAuthenticationResponse;
 import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.ShopDto;
 import com.example.SpringSecurity.Entity.Notification;
@@ -10,7 +9,6 @@ import com.example.SpringSecurity.Repository.ShopRepository;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.JwtService;
 import com.example.SpringSecurity.Service.ShopNotificationService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +54,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
                 notification.setShopId(shop);
                 notification.setCategories(shopDto.getCategories());
                 notification.setPhoto(shopDto.getPhoto().getBytes());
-                notification.setUser(shopDto.getUserId());
+                notification.setUser(notificationDto.getUserId());
                 notification.setTitle(notificationDto.getUsername());
 
 

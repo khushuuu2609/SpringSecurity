@@ -17,4 +17,5 @@ public class NotificationDto {
     private MultipartFile photo;
     private String categories;
     private String username;
+    private User UserId;
 }
