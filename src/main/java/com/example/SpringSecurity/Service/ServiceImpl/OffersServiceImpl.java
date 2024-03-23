@@ -46,15 +46,14 @@ public class OffersServiceImpl implements OffersService {
 
             String userName = (String) session.getAttribute("username");
             Long id = (Long) session.getAttribute("userId");
+//            var shopId= session.getAttribute("shopId");
 
             if (id != null) {
                 User user = userRepository.findById(id).orElseThrow();
                 user.setId(id);
 
-
-
                 SellerReg seller = sellerRepository.findByUserId(id);
-//                Shop shop = shopRepository.findById(shopId).orElseThrow();
+//                Shop shop = shopRepository.findById((Long) shopId).orElseThrow();
 
                 if(seller != null) {
                     // Convert ShopDto to Shop entity

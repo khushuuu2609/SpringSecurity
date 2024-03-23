@@ -4,7 +4,6 @@ import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.ShopDto;
 import com.example.SpringSecurity.Entity.Notification;
 import com.example.SpringSecurity.Entity.Shop;
-import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.NotificationRepository;
 import com.example.SpringSecurity.Repository.ShopRepository;
 import com.example.SpringSecurity.Repository.UserRepository;
@@ -40,21 +39,10 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
             String base64Photo = Base64.getEncoder().encodeToString(shopDto.getPhoto().getBytes());
 
 
-            // Convert ShopDto to Shop entity
-
-
-            String userName = (String) session.getAttribute("username");
-            Long id = (Long) session.getAttribute("userId");
-
-            if (id != null) {
-                User user = userRepository.findById(id).orElseThrow();
-                user.setId(id);
-
                 Shop shop = new Shop();
                 shop.setPhoto(base64Photo.getBytes());
                 shop.setCategories(shopDto.getCategories());
                 shop.setDescription(shopDto.getDescription());
-                shop.setUser(user);
                 String open = "OPEN";
                 shop.setStatus(open);
 
@@ -63,8 +51,6 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
                 shopRepository.save(shop);
 
                 Notification notification = new Notification();
-                notification.setUser(user);
-                notification.setTitle(userName);
                 notification.setDescription(notificationDto.getDescription());
                 notification.setShopId(shop);
                 notification.setCategories(shopDto.getCategories());
@@ -72,8 +58,6 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
 
                 notificationRepository.save(notification);
 
-                return ResponseEntity.badRequest().body("userId is getting");
-            }
 
 
             return ResponseEntity.ok("Order placed successfully");

@@ -70,8 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwt = jwtService.generateToken(member);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
-
-
+    
     @Override
     public JwtAuthenticationResponse signin(Signin request) {
         authenticationManager.authenticate(
@@ -86,6 +85,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         session.setAttribute("username", member.getUsername());
         session.setAttribute("role",member.getRole());
         return JwtAuthenticationResponse.builder().token(jwt).
-                userId(member.getId()).role(member.getRole()).build();
+                userId(member.getId()).username(member.getUsername()).role(member.getRole()).build();
     }
 }
