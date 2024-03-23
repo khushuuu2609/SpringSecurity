@@ -9,5 +9,5 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ShopNotificationService {
-    ResponseEntity<String> placeOrder(ShopDto shopDto, NotificationDto notificationDto, HttpSession session);
+    ResponseEntity<String> placeOrder(ShopDto shopDto, NotificationDto notificationDto);
 }

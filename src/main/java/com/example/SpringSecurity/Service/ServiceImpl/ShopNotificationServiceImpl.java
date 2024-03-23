@@ -35,7 +35,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
     private JwtService jwtService;
 
 
-    public ResponseEntity<String> placeOrder(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto, HttpSession session) {
+    public ResponseEntity<String> placeOrder(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) {
         try {
             // Convert MultipartFile to base64-encoded string
             String base64Photo = Base64.getEncoder().encodeToString(shopDto.getPhoto().getBytes());
@@ -49,8 +49,6 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
                 shop.setStatus(open);
                 shop.setUser(shopDto.getUserId());
 
-                session.setAttribute("shopId", shop.getShopId());
-                // Save the shop in the database
                 shopRepository.save(shop);
 
                 Notification notification = new Notification();
@@ -59,7 +57,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
                 notification.setCategories(shopDto.getCategories());
                 notification.setPhoto(shopDto.getPhoto().getBytes());
                 notification.setUser(shopDto.getUserId());
-                notification.setTitle(String.valueOf(notificationDto.getUsername()));
+                notification.setTitle(notificationDto.getUsername());
 
 
                 notificationRepository.save(notification);

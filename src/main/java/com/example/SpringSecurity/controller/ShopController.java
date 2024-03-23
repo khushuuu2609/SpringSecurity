@@ -19,11 +19,11 @@ public class ShopController {
     private final ShopNotificationService shopNotificationService;
 
     @PostMapping("/shop")
-    public ResponseEntity<String> placeShop(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto, HttpSession session) {
+    public ResponseEntity<String> placeShop(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) {
         if (shopDto.getPhoto() == null) {
             return ResponseEntity.badRequest().body("Photo is required");
         }
-        shopNotificationService.placeOrder(shopDto, notificationDto,session);
+        shopNotificationService.placeOrder(shopDto, notificationDto);
         return  ResponseEntity.ok("order is placed successfully");
     }
 

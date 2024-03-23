@@ -16,5 +16,5 @@ public class NotificationDto {
     private String description;
     private MultipartFile photo;
     private String categories;
-    private User username;
+    private String username;
 }
