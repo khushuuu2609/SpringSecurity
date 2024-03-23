@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.Service.ServiceImpl;
 
+import com.example.SpringSecurity.Dao.JwtAuthenticationResponse;
 import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.ShopDto;
 import com.example.SpringSecurity.Entity.Notification;
@@ -33,6 +34,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
     @Autowired
     private JwtService jwtService;
 
+
     public ResponseEntity<String> placeOrder(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto, HttpSession session) {
         try {
             // Convert MultipartFile to base64-encoded string
@@ -45,16 +47,20 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
                 shop.setDescription(shopDto.getDescription());
                 String open = "OPEN";
                 shop.setStatus(open);
+                shop.setUser(shopDto.getUserId());
 
                 session.setAttribute("shopId", shop.getShopId());
                 // Save the shop in the database
                 shopRepository.save(shop);
 
                 Notification notification = new Notification();
-                notification.setDescription(notificationDto.getDescription());
+                notification.setDescription(shopDto.getDescription());
                 notification.setShopId(shop);
                 notification.setCategories(shopDto.getCategories());
                 notification.setPhoto(shopDto.getPhoto().getBytes());
+                notification.setUser(shopDto.getUserId());
+                notification.setTitle(String.valueOf(notificationDto.getUsername()));
+
 
                 notificationRepository.save(notification);
 
