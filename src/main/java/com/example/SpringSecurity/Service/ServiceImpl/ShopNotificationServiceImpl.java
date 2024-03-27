@@ -38,7 +38,6 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
             // Convert MultipartFile to base64-encoded string
             String base64Photo = Base64.getEncoder().encodeToString(shopDto.getPhoto().getBytes());
 
-
                 Shop shop = new Shop();
                 shop.setPhoto(base64Photo.getBytes());
                 shop.setCategories(shopDto.getCategories());
@@ -57,10 +56,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
                 notification.setUser(notificationDto.getUserId());
                 notification.setTitle(notificationDto.getUsername());
 
-
                 notificationRepository.save(notification);
-
-
 
             return ResponseEntity.ok("Order placed successfully");
         } catch (IOException e) {

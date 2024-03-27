@@ -16,4 +16,5 @@ public class SellerRegDto {
     private String area_name;
     private String city;
     private String pin_code;
+    private String userId;
 }
