@@ -25,7 +25,7 @@ public class SellerRegServiceImpl implements SellerRegService {
 
         Long id = (Long) session.getAttribute("userId");
 
-        if (id != null) {
+
             User user = userRepository.findById(id).orElseThrow();
             user.setId(id);
 
@@ -39,7 +39,5 @@ public class SellerRegServiceImpl implements SellerRegService {
 
             sellerRepository.save(sellerReg);
             return ResponseEntity.ok("Successfully Saved");
-        }
-        return ResponseEntity.badRequest().body("Not saved!!");
     }
 }
