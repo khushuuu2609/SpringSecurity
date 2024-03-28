@@ -39,8 +39,9 @@ public class SellerController {
             return Util.getResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/seller")
-    public ResponseEntity<String> sellerReqcontroller(@RequestBody SellerRegDto sellerRegDto) {
-        return sellerRegService.sellerReg(sellerRegDto,session);
+    public ResponseEntity<String> registerSeller(@RequestBody SellerRegDto sellerRegDto, @RequestParam Long userId) {
+        return sellerRegService.sellerReg(sellerRegDto, userId);
     }
 }

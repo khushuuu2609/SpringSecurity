@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface SellerRegService {
 
-    ResponseEntity<String> sellerReg(SellerRegDto sellerRegDto, HttpSession session);
+    ResponseEntity<String> sellerReg(SellerRegDto sellerRegDto,Long id);
 }

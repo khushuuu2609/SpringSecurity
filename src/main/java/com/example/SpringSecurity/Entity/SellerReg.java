@@ -32,9 +32,8 @@ public class SellerReg {
     @Column(nullable = false)
     private String area_name;
 
-    @Setter
-    @OneToOne
-    @JoinColumn(name="user_id",referencedColumnName = "id")
-    private User userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 }

@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 public class Signin {
 
-    private String id;
+    private Long id;
     private String email;
     private String password;
 

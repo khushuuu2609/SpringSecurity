@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.Dao.Request;
 
+import com.example.SpringSecurity.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,6 @@ public class SellerRegDto {
     private String area_name;
     private String city;
     private String pin_code;
-    private String userId;
+    private User userId;
+
 }

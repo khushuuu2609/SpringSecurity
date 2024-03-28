@@ -7,37 +7,38 @@ import com.example.SpringSecurity.Repository.SellerRepository;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.SellerRegService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
+
 @Service
+@AllArgsConstructor
 public class SellerRegServiceImpl implements SellerRegService {
 
     @Autowired
-    SellerRepository sellerRepository;
+    private SellerRepository sellerRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    public ResponseEntity<String> sellerReg(@RequestBody SellerRegDto sellerRegDto, HttpSession session) {
+    public ResponseEntity<String> sellerReg(SellerRegDto sellerRegDto, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
 
-        Long id = (Long) session.getAttribute("userId");
+        SellerReg sellerReg = new SellerReg();
+        sellerReg.setCategories(sellerRegDto.getCategories());
+        sellerReg.setDescription(sellerRegDto.getDescription());
+        sellerReg.setArea_name(sellerRegDto.getArea_name());
+        sellerReg.setPin_code(sellerRegDto.getPin_code());
+        sellerReg.setCity(sellerRegDto.getCity());
+        sellerReg.setUser(user);
 
-
-            User user = userRepository.findById(id).orElseThrow();
-            user.setId(id);
-
-            SellerReg sellerReg = new SellerReg();
-            sellerReg.setCategories(sellerRegDto.getCategories());
-            sellerReg.setDescription(sellerRegDto.getDescription());
-            sellerReg.setArea_name(sellerRegDto.getArea_name());
-            sellerReg.setPin_code(sellerRegDto.getPin_code());
-            sellerReg.setCity(sellerRegDto.getCity());
-            sellerReg.setUserId(user);
-
-            sellerRepository.save(sellerReg);
-            return ResponseEntity.ok("Successfully Saved");
+        sellerRepository.save(sellerReg);
+        return ResponseEntity.ok("Successfully Saved");
     }
 }
