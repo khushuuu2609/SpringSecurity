@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -31,7 +33,7 @@ public class ShopController {
 
     @GetMapping("/shops/{userId}")
     public ResponseEntity<List<ShopDto>> getShopsByUserId(@PathVariable Long userId) {
-        List<ShopDto> shops = shopNotificationService.getShopsByUserId(userId);
+        ArrayList<ShopDto> shops = (ArrayList<ShopDto>) shopNotificationService.getShopsByUserId(userId);
         return ResponseEntity.ok(shops);
     }
 

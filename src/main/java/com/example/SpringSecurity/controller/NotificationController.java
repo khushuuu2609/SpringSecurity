@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,14 +43,17 @@ public class NotificationController {
             // Fetch all notifications from the database
             List<Notification> notifications = notificationRepository.findAll();
 
-            // Filter notifications based on user's area_name and categories
+            // Find all sellers whose areaName matches user's areaName
+            List<SellerReg> sellersInUserArea = sellerRepository.findByAreaName(userAreaName);
+
+            // Filter notifications based on user's areaName and categories
             List<Notification> filteredNotifications = notifications.stream()
-                    .filter(notification -> {
-                        // Find the corresponding seller for the notification
-                        SellerReg seller = sellerRepository.findByCategoriesAndAreaName(notification.getCategories(), userAreaName);
-                        return seller != null;
-                    })
+                    .filter(notification ->
+                            sellersInUserArea.stream()
+                                    .anyMatch(seller ->
+                                            Arrays.asList(seller.getCategories()).contains(notification.getCategories())))
                     .collect(Collectors.toList());
+
 
             return new ResponseEntity<>(filteredNotifications, HttpStatus.OK);
         } catch (Exception e) {
