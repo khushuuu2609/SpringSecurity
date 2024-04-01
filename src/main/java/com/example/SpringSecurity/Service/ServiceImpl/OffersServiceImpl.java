@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.Service.ServiceImpl;
 
+import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.OfferDto;
 import com.example.SpringSecurity.Entity.Offers;
 import com.example.SpringSecurity.Entity.SellerReg;
@@ -35,7 +36,9 @@ public class OffersServiceImpl implements OffersService {
     private ShopRepository shopRepository;
 
     @Override
-    public ResponseEntity<String> offerSending(OfferDto offerDto, HttpSession session) {
+    public ResponseEntity<String> offerSending(OfferDto offerDto, NotificationDto notificationDto, HttpSession session) {
+
+
         if (offerDto.getPhoto() == null) {
             return ResponseEntity.badRequest().body("Photo is required");
         }

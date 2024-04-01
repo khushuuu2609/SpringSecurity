@@ -1,8 +1,9 @@
 package com.example.SpringSecurity.controller;
 
+import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.OfferDto;
 import com.example.SpringSecurity.Entity.User;
-import com.example.SpringSecurity.Repository.OfferRepository;
+import com.example.SpringSecurity.Repository.NotificationRepository;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.ServiceImpl.OffersServiceImpl;
 import jakarta.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OfferController {
 
     @Autowired
-    OfferRepository offerRepository;
+    NotificationRepository notificationRepository;
 
     @Autowired
     OffersServiceImpl offersService;
@@ -27,11 +28,11 @@ public class OfferController {
     UserRepository userRepository;
 
     @PostMapping("/offer")
-    public ResponseEntity<String> offerProduct(@ModelAttribute OfferDto offerDto, HttpSession session) {
-        if (offerDto.getPhoto() != null) {
-            User user = userRepository.findById(offerDto.getUserId().getId()).orElse(null);
+    public ResponseEntity<String> offerProduct(@ModelAttribute NotificationDto notificationDto, OfferDto offerDto, HttpSession session) {
+        if (notificationDto.getPhoto() != null) {
+            User user = userRepository.findById(notificationDto.getUserId().getId()).orElse(null);
             if (user != null) {
-                offersService.offerSending(offerDto, session);
+                offersService.offerSending(offerDto, notificationDto , session );
                 return ResponseEntity.ok("Offer sent successfully");
             } else {
                 return ResponseEntity.badRequest().body("User not found");
