@@ -34,7 +34,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
     private JwtService jwtService;
 
 
-    public ResponseEntity<String> placeOrder(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) {
+    public void placeOrder(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) {
         try {
             // Convert MultipartFile to base64-encoded string
             String base64Photo = Base64.getEncoder().encodeToString(shopDto.getPhoto().getBytes());
@@ -59,11 +59,11 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
 
                 notificationRepository.save(notification);
 
-            return ResponseEntity.ok("Order placed successfully");
+            ResponseEntity.ok("Order placed successfully");
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception as needed
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process the photo");
-    }
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process the photo");
+        }
     }
 
     @Override

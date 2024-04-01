@@ -5,7 +5,6 @@ import com.example.SpringSecurity.Entity.Role;
 import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,11 +73,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow();
-    }
-
-    @Override
-    public Long getUserIdFromRequest(HttpServletRequest request) {
-        return Long.parseLong(request.getSession().getAttribute("userId").toString());
     }
 
 }

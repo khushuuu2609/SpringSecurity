@@ -15,8 +15,5 @@ public interface SellerRepository extends JpaRepository<SellerReg,Long> {
     @Query(value = "SELECT * FROM seller_reg WHERE user_id LIKE :id", nativeQuery = true)
     SellerReg findByUserId(Long id);
 
-    @Query(value = "SELECT * FROM seller_reg WHERE :categories IN (categories) AND area_name = :areaName", nativeQuery = true)
-    SellerReg findByCategoriesAndAreaName(@Param("categories") String category, @Param("areaName") String areaName);
-
     List<SellerReg> findByAreaName(String userAreaName);
 }

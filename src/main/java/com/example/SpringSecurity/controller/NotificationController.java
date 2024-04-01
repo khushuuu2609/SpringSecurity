@@ -1,12 +1,12 @@
 package com.example.SpringSecurity.controller;
 
 import com.example.SpringSecurity.Entity.Notification;
+import com.example.SpringSecurity.Entity.Role;
 import com.example.SpringSecurity.Entity.SellerReg;
 import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.NotificationRepository;
 import com.example.SpringSecurity.Repository.SellerRepository;
 import com.example.SpringSecurity.Service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,12 +43,12 @@ public class NotificationController {
             // Find all sellers whose areaName matches user's areaName
             List<SellerReg> sellersInUserArea = sellerRepository.findByAreaName(userAreaName);
 
-            // Filter notifications based on user's areaName and categories
             List<Notification> filteredNotifications = notifications.stream()
                     .filter(notification ->
                             sellersInUserArea.stream()
                                     .anyMatch(seller ->
-                                            Arrays.asList(seller.getCategories()).contains(notification.getCategories())))
+                                            Arrays.asList(seller.getCategories()).contains(notification.getCategories()))
+                                    && user.getRole() == Role.SELLER)
                     .collect(Collectors.toList());
 
             return new ResponseEntity<>(filteredNotifications, HttpStatus.OK);
