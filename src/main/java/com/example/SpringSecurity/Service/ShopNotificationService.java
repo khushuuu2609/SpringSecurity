@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface ShopNotificationService {
     ResponseEntity<String> placeOrder(ShopDto shopDto, NotificationDto notificationDto);
+
+    List<ShopDto> getShopsByUserId(Long userId);
 }

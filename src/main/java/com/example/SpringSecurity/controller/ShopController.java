@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -26,6 +28,13 @@ public class ShopController {
         shopNotificationService.placeOrder(shopDto, notificationDto);
         return  ResponseEntity.ok("order is placed successfully");
     }
+
+    @GetMapping("/shops/{userId}")
+    public ResponseEntity<List<ShopDto>> getShopsByUserId(@PathVariable Long userId) {
+        List<ShopDto> shops = shopNotificationService.getShopsByUserId(userId);
+        return ResponseEntity.ok(shops);
+    }
+
 
 
 }
