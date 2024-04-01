@@ -30,7 +30,7 @@ public class SellerReg {
     private String pin_code;
 
     @Column(nullable = false)
-    private String area_name;
+    private String areaName;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

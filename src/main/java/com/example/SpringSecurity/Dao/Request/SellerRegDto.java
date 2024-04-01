@@ -14,7 +14,7 @@ public class SellerRegDto {
 
     private String[] categories;
     private String description;
-    private String area_name;
+    private String areaName;
     private String city;
     private String pin_code;
     private User userId;

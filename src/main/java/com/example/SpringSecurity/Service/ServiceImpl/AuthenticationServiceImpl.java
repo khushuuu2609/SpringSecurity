@@ -62,7 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .confirmPassword(passwordEncoder.encode(request.getConfirmPassword()))
                 .pin_code(request.getPin_code())
                 .address(request.getAddress())
-                .area_name(request.getArea_name())
+                .areaName(request.getAreaName())
                 .city(request.getCity())
                 .role(Role.USER)
                 .build();

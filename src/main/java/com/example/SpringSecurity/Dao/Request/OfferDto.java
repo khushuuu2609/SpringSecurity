@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.Dao.Request;
 
+import com.example.SpringSecurity.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,5 @@ public class OfferDto {
     private String description;
     private String categories;
     private MultipartFile photo;
-
+    private User UserId;
 }
