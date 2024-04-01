@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class ShopNotificationServiceImpl implements ShopNotificationService {
@@ -63,5 +64,10 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
             e.printStackTrace(); // Handle the exception as needed
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process the photo");
     }
+    }
+
+    @Override
+    public List<ShopDto> getShopsByUserId(Long userId) {
+        return shopRepository.getShopsByUserId(userId);
     }
 }
