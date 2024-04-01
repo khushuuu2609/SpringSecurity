@@ -33,5 +33,4 @@ public class Shop {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    // Constructors, getters, and setters
 }

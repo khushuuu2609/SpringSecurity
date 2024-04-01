@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.Dao.Request;
 
+import com.example.SpringSecurity.Entity.Shop;
 import com.example.SpringSecurity.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,5 @@ public class NotificationDto {
     private String categories;
     private String username;
     private User UserId;
+
 }

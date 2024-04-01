@@ -1,12 +1,10 @@
 package com.example.SpringSecurity.controller;
 
 import com.example.SpringSecurity.Dao.Request.UpdateProfileRequest;
-import com.example.SpringSecurity.Entity.Role;
 import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Exception.UserNotFoundException;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.UserService;
-import com.example.SpringSecurity.utils.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

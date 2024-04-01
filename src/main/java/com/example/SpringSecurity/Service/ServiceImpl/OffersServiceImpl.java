@@ -44,31 +44,30 @@ public class OffersServiceImpl implements OffersService {
         }
 
         try {
-            // Convert MultipartFile to base64-encoded string
+
             String base64Photo = Base64.getEncoder().encodeToString(offerDto.getPhoto().getBytes());
 
             String userName = (String) session.getAttribute("username");
             Long id = (Long) session.getAttribute("userId");
-//            var shopId= session.getAttribute("shopId");
+
 
             if (id != null) {
                 User user = userRepository.findById(id).orElseThrow();
                 user.setId(id);
 
                 SellerReg seller = sellerRepository.findByUserId(id);
-//                Shop shop = shopRepository.findById((Long) shopId).orElseThrow();
+                Shop shop = shopRepository.findById((Long) session.getAttribute("shopId")).orElseThrow();
 
                 if(seller != null) {
-                    // Convert ShopDto to Shop entity
                     Offers offer = new Offers();
                     offer.setPhoto(base64Photo.getBytes());
                     offer.setCategories(offerDto.getCategories());
                     offer.setDescription(offerDto.getDescription());
                     offer.setPrice(offerDto.getPrice());
                     offer.setSeller(seller);
-//                    offer.setShop(shop);
+                    offer.setUser(user);
+                    offer.setShop(shop);
 
-                    // Save the shop in the database
                     offerRepository.save(offer);
                 }
                 else{
@@ -79,7 +78,7 @@ public class OffersServiceImpl implements OffersService {
 
         } catch (
                 IOException e) {
-            e.printStackTrace(); // Handle the exception as needed
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process the photo");
         }
     }

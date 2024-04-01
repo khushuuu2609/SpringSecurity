@@ -2,6 +2,7 @@ package com.example.SpringSecurity.Service;
 
 import com.example.SpringSecurity.Dao.Request.UpdateProfileRequest;
 import com.example.SpringSecurity.Entity.User;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService {
@@ -14,4 +15,5 @@ public interface UserService {
 
     User findByEmail(String email);
 
+    Long getUserIdFromRequest(HttpServletRequest request);
 }
