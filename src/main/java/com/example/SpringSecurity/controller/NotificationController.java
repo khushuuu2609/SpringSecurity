@@ -31,11 +31,8 @@ public class NotificationController {
     private UserService userService;
 
     @GetMapping("/notifications")
-    public ResponseEntity<List<Notification>> getAllNotifications(HttpServletRequest request) {
+    public ResponseEntity<List<Notification>> getAllNotifications(@RequestParam Long userId) {
         try {
-            // Get logged-in user's id from the request
-            Long userId = userService.getUserIdFromRequest(request);
-
             // Find user's area name
             User user = userService.getUserById(userId);
             String userAreaName = user.getAreaName();
@@ -53,7 +50,6 @@ public class NotificationController {
                                     .anyMatch(seller ->
                                             Arrays.asList(seller.getCategories()).contains(notification.getCategories())))
                     .collect(Collectors.toList());
-
 
             return new ResponseEntity<>(filteredNotifications, HttpStatus.OK);
         } catch (Exception e) {
