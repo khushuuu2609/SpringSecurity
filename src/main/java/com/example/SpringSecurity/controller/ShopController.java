@@ -2,12 +2,14 @@ package com.example.SpringSecurity.controller;
 
 import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.ShopDto;
+import com.example.SpringSecurity.Entity.Shop;
 import com.example.SpringSecurity.Service.ShopNotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class ShopController {
     private final ShopNotificationService shopNotificationService;
 
     @PostMapping("/shop")
-    public ResponseEntity<String> placeShop(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) {
+    public ResponseEntity<String> placeShop(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) throws IOException {
         if (shopDto.getPhoto() == null) {
             return ResponseEntity.badRequest().body("Photo is required");
         }
@@ -29,8 +31,8 @@ public class ShopController {
     }
 
     @GetMapping("/shops/{userId}")
-    public ResponseEntity<List<ShopDto>> getShopOrdersByUserId(@PathVariable Long userId) {
-        List<ShopDto> shopOrders = shopNotificationService.getShopOrdersByUserId(userId);
+    public ResponseEntity<List<Shop>> getShopOrdersByUserId(@PathVariable Long userId) {
+        List<Shop> shopOrders = shopNotificationService.getShopOrdersByUserId(userId);
         return ResponseEntity.ok(shopOrders);
     }
 }

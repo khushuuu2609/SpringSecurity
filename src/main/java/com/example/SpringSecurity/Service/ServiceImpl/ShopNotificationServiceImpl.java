@@ -14,9 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -34,12 +32,12 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
     private JwtService jwtService;
 
 
-    public void placeOrder(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) {
+    public void placeOrder(@ModelAttribute ShopDto shopDto, NotificationDto notificationDto) throws IOException {
         // Convert MultipartFile to base64-encoded string
-        String base64Photo = Base64.getEncoder().encodeToString(shopDto.getPhoto().getBytes());
+        byte[] bytes = shopDto.getPhoto().getBytes();
 
         Shop shop = new Shop();
-        shop.setPhoto(base64Photo.getBytes());
+        shop.setPhoto(bytes);
         shop.setCategories(shopDto.getCategories());
         shop.setDescription(shopDto.getDescription());
         String open = "OPEN";
@@ -47,6 +45,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         shop.setUser(shopDto.getUserId());
 
         shopRepository.save(shop);
+
 
         Notification notification = new Notification();
         notification.setDescription(shopDto.getDescription());
@@ -62,18 +61,8 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
     }
 
     @Override
-    public List<ShopDto> getShopOrdersByUserId(Long userId) {
-        List<Shop> shops = shopRepository.findByUserId(userId);
-        List<ShopDto> shopDtos = new ArrayList<>();
-        for (Shop shop : shops) {
-            ShopDto shopDto = new ShopDto();
-            shopDto.setCategories(shop.getCategories());
-            shopDto.setDescription(shop.getDescription());
-            shopDto.setPhoto(Arrays.toString(shop.getPhoto()));
-            shopDto.setUserId(shop.getUser());
-            shopDtos.add(shopDto);
-        }
-        return shopDtos;
+    public List<Shop> getShopOrdersByUserId(Long userId) {
+        return shopRepository.findByUserId(userId);
     }
 
 }
