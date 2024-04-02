@@ -1,16 +1,15 @@
 package com.example.SpringSecurity.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 public class Notification {
 
     @Id
@@ -30,11 +29,12 @@ public class Notification {
     @Column(nullable = false)
     private String categories;
 
-
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="shopId",referencedColumnName = "shopid")
     private Shop shopId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

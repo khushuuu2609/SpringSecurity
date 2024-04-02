@@ -7,16 +7,20 @@ import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.NotificationRepository;
 import com.example.SpringSecurity.Repository.SellerRepository;
 import com.example.SpringSecurity.Service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173")
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class NotificationController {
@@ -31,29 +35,32 @@ public class NotificationController {
     private UserService userService;
 
     @GetMapping("/notifications")
-    public ResponseEntity<List<Notification>> getAllNotifications(@RequestParam Long userId) {
+    public ResponseEntity<List<Notification>> getAllNotifications(@Param("userId") Long userId) {
         try {
-            // Find user's area name
+
             User user = userService.getUserById(userId);
             String userAreaName = user.getAreaName();
 
-            // Fetch all notifications from the database
             List<Notification> notifications = notificationRepository.findAll();
 
-            // Find all sellers whose areaName matches user's areaName
             List<SellerReg> sellersInUserArea = sellerRepository.findByAreaName(userAreaName);
+            System.out.println(sellersInUserArea);
 
-            List<Notification> filteredNotifications = notifications.stream()
-                    .filter(notification ->
-                            sellersInUserArea.stream()
-                                    .anyMatch(seller ->
-                                            Arrays.asList(seller.getCategories()).contains(notification.getCategories()))
-                                    && user.getRole() == Role.SELLER)
-                    .collect(Collectors.toList());
+            List<Notification> filteredNotifications = new ArrayList<>();
+            for (Notification notification : notifications) {
+                for (SellerReg seller : sellersInUserArea) {
+                    if (Arrays.asList(seller.getCategories()).contains(notification.getCategories())) {
+                        filteredNotifications.add(notification);
+                        break;
+                    }
+                }
+            }
 
-            return new ResponseEntity<>(filteredNotifications, HttpStatus.OK);
+            System.out.println(filteredNotifications);
+
+            return ResponseEntity.ok(filteredNotifications);
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception as needed
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
