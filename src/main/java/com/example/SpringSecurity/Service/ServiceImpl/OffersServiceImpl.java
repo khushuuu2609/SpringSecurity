@@ -4,7 +4,6 @@ import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.OfferDto;
 import com.example.SpringSecurity.Entity.Offers;
 import com.example.SpringSecurity.Entity.SellerReg;
-import com.example.SpringSecurity.Entity.Shop;
 import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.OfferRepository;
 import com.example.SpringSecurity.Repository.SellerRepository;
@@ -19,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Base64;
 
 @Slf4j
 @Service
@@ -44,8 +42,6 @@ public class OffersServiceImpl implements OffersService {
 
         try {
             byte[] bytes = offerDto.getPhoto().getBytes();
-
-            String userName = (String) session.getAttribute("username");
             Long id = (Long) session.getAttribute("userId");
 
             if (id != null) {
@@ -53,7 +49,7 @@ public class OffersServiceImpl implements OffersService {
                 user.setId(id);
 
                 SellerReg seller = sellerRepository.findByUserId(id);
-                Shop shop = shopRepository.findById((Long) session.getAttribute("shopId")).orElseThrow();
+
 
                 if (seller != null) {
                     Offers offer = new Offers();
@@ -63,7 +59,7 @@ public class OffersServiceImpl implements OffersService {
                     offer.setPrice(offerDto.getPrice());
                     offer.setSeller(seller);
                     offer.setUser(user);
-                    offer.setShop(shop);
+                    offer.setShop(offerDto.getShopId());
 
                     offerRepository.save(offer);
                 } else {
