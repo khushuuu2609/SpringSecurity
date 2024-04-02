@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Long> {
+    List<Shop> findByUserId(Long userId);
 }
 

@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class ShopDto {
     private User UserId;
-    private MultipartFile photo;
+    private String photo;
     private String categories;
     private String description;
     private String status;
