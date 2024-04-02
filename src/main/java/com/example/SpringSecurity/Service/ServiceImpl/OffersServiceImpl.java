@@ -38,18 +38,15 @@ public class OffersServiceImpl implements OffersService {
     @Override
     public ResponseEntity<String> offerSending(OfferDto offerDto, NotificationDto notificationDto, HttpSession session) {
 
-
         if (offerDto.getPhoto() == null) {
             return ResponseEntity.badRequest().body("Photo is required");
         }
 
         try {
-
-            String base64Photo = Base64.getEncoder().encodeToString(offerDto.getPhoto().getBytes());
+            byte[] bytes = offerDto.getPhoto().getBytes();
 
             String userName = (String) session.getAttribute("username");
             Long id = (Long) session.getAttribute("userId");
-
 
             if (id != null) {
                 User user = userRepository.findById(id).orElseThrow();
@@ -58,9 +55,9 @@ public class OffersServiceImpl implements OffersService {
                 SellerReg seller = sellerRepository.findByUserId(id);
                 Shop shop = shopRepository.findById((Long) session.getAttribute("shopId")).orElseThrow();
 
-                if(seller != null) {
+                if (seller != null) {
                     Offers offer = new Offers();
-                    offer.setPhoto(base64Photo.getBytes());
+                    offer.setPhoto(bytes);
                     offer.setCategories(offerDto.getCategories());
                     offer.setDescription(offerDto.getDescription());
                     offer.setPrice(offerDto.getPrice());
@@ -69,8 +66,7 @@ public class OffersServiceImpl implements OffersService {
                     offer.setShop(shop);
 
                     offerRepository.save(offer);
-                }
-                else{
+                } else {
                     log.error("seller is null");
                 }
             }
