@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface ShopNotificationService {
     void placeOrder(ShopDto shopDto, NotificationDto notificationDto);
-
-    List<ShopDto> getShopsByUserId(Long userId);
 }

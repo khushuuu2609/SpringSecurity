@@ -65,9 +65,4 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process the photo");
         }
     }
-
-    @Override
-    public List<ShopDto> getShopsByUserId(Long userId) {
-        return shopRepository.getShopsByUserId(userId);
-    }
 }

@@ -30,13 +30,4 @@ public class ShopController {
         shopNotificationService.placeOrder(shopDto, notificationDto);
         return  ResponseEntity.ok("order is placed successfully");
     }
-
-    @GetMapping("/shops/{userId}")
-    public ResponseEntity<List<ShopDto>> getShopsByUserId(@PathVariable Long userId) {
-        ArrayList<ShopDto> shops = (ArrayList<ShopDto>) shopNotificationService.getShopsByUserId(userId);
-        return ResponseEntity.ok(shops);
-    }
-
-
-
 }
