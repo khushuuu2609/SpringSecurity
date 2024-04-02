@@ -41,4 +41,27 @@ public class SellerRegServiceImpl implements SellerRegService {
         sellerRepository.save(sellerReg);
         return ResponseEntity.ok("Successfully Saved");
     }
+
+    public ResponseEntity<SellerReg> getSellerProfile(Long userId) {
+        SellerReg sellerReg = sellerRepository.findByUserId(userId);
+
+        return ResponseEntity.ok(sellerReg);
+    }
+
+    @Override
+    public ResponseEntity<String> updateSellerProfile(SellerReg sellerReg, Long userId) {
+        SellerReg existingSellerReg = sellerRepository.findByUserId(userId);
+        if (existingSellerReg == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seller profile not found");
+        }
+
+        existingSellerReg.setCategories(sellerReg.getCategories());
+        existingSellerReg.setDescription(sellerReg.getDescription());
+        existingSellerReg.setAreaName(sellerReg.getAreaName());
+        existingSellerReg.setPin_code(sellerReg.getPin_code());
+        existingSellerReg.setCity(sellerReg.getCity());
+
+        sellerRepository.save(existingSellerReg);
+        return ResponseEntity.ok("Seller profile updated successfully");
+    }
 }

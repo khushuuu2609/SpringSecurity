@@ -2,6 +2,7 @@ package com.example.SpringSecurity.controller;
 
 import com.example.SpringSecurity.Dao.Request.ContactFormDto;
 import com.example.SpringSecurity.Dao.Request.SellerRegDto;
+import com.example.SpringSecurity.Entity.SellerReg;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.SellerRegService;
 import com.example.SpringSecurity.Service.UserService;
@@ -43,5 +44,17 @@ public class SellerController {
     @PostMapping("/seller")
     public ResponseEntity<String> registerSeller(@RequestBody SellerRegDto sellerRegDto, @RequestParam Long userId) {
         return sellerRegService.sellerReg(sellerRegDto, userId);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/seller/{userId}")
+    public ResponseEntity<SellerReg> getSellerProfile(@PathVariable Long userId) {
+        return sellerRegService.getSellerProfile(userId);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PutMapping("/seller/{userId}")
+    public ResponseEntity<String> updateSellerProfile(@RequestBody SellerReg sellerReg, @PathVariable Long userId) {
+        return sellerRegService.updateSellerProfile(sellerReg, userId);
     }
 }
