@@ -4,6 +4,7 @@ import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.OfferDto;
 import com.example.SpringSecurity.Entity.Offers;
 import com.example.SpringSecurity.Entity.SellerReg;
+import com.example.SpringSecurity.Entity.Shop;
 import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.OfferRepository;
 import com.example.SpringSecurity.Repository.SellerRepository;
@@ -11,6 +12,7 @@ import com.example.SpringSecurity.Repository.ShopRepository;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.OffersService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,7 @@ public class OffersServiceImpl implements OffersService {
     private ShopRepository shopRepository;
 
     @Override
+    @Transactional
     public ResponseEntity<String> offerSending(OfferDto offerDto, NotificationDto notificationDto, HttpSession session) {
 
         if (offerDto.getPhoto() == null) {
@@ -50,8 +53,10 @@ public class OffersServiceImpl implements OffersService {
 
                 SellerReg seller = sellerRepository.findByUserId(id);
 
-
                 if (seller != null) {
+                    Shop shop = new Shop();
+                    shop.setShopId(offerDto.getShopId().getShopId());
+
                     Offers offer = new Offers();
                     offer.setPhoto(bytes);
                     offer.setCategories(offerDto.getCategories());
@@ -59,7 +64,7 @@ public class OffersServiceImpl implements OffersService {
                     offer.setPrice(offerDto.getPrice());
                     offer.setSeller(seller);
                     offer.setUser(user);
-                    offer.setShop(offerDto.getShopId());
+                    offer.setShop(shop);
 
                     offerRepository.save(offer);
                 } else {

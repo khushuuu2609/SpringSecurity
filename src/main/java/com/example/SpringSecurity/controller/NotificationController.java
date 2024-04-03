@@ -1,6 +1,7 @@
 package com.example.SpringSecurity.controller;
 
 import com.example.SpringSecurity.Entity.Notification;
+import com.example.SpringSecurity.Entity.Role;
 import com.example.SpringSecurity.Entity.SellerReg;
 import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.NotificationRepository;
@@ -38,26 +39,30 @@ public class NotificationController {
     @GetMapping("/notifications")
     public ResponseEntity<List<Notification>> getAllNotifications(@Param("userId") Long userId) {
         try {
-
             User user = userService.getUserById(userId);
+            Role userRole = user.getRole();
+
+            if (userRole != Role.SELLER) {
+                return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            }
+
+            System.out.println(user);
+
             String userAreaName = user.getAreaName();
-
             List<Notification> notifications = notificationRepository.findAll();
-
             List<SellerReg> sellersInUserArea = sellerRepository.findByAreaName(userAreaName);
+
             System.out.println(sellersInUserArea);
 
             List<Notification> filteredNotifications = new ArrayList<>();
             for (Notification notification : notifications) {
                 for (SellerReg seller : sellersInUserArea) {
-                    if (Arrays.asList(seller.getCategories()).contains(notification.getCategories())) {
+                    if (Arrays.asList(seller.getCategories()).contains(notification.getCategories()) && userAreaName.equals(notification.getUser().getAreaName())) {
                         filteredNotifications.add(notification);
                         break;
                     }
                 }
             }
-
-            System.out.println(filteredNotifications);
 
             return ResponseEntity.ok(filteredNotifications);
         } catch (Exception e) {
