@@ -7,6 +7,7 @@ import com.example.SpringSecurity.Repository.ShopRepository;
 import com.example.SpringSecurity.Service.ShopNotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class ShopController {
             return ResponseEntity.badRequest().body("Photo is required");
         }
         shopNotificationService.placeOrder(shopDto, notificationDto);
-        return  ResponseEntity.ok("order is placed successfully");
+        return ResponseEntity.ok("order is placed successfully");
     }
 
     @GetMapping("/shops/{userId}")
@@ -55,6 +56,21 @@ public class ShopController {
             return ResponseEntity.ok("Status updated successfully");
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("shopdis/{shopId}")
+    public ResponseEntity<Shop> getShopById(@PathVariable Long shopId) {
+        try {
+            Shop shop = shopRepository.findById(shopId).orElse(null);
+            if (shop != null) {
+                return ResponseEntity.ok(shop);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
