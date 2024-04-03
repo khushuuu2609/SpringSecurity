@@ -29,7 +29,6 @@ public class Notification {
     @Column(nullable = false)
     private String categories;
 
-    @JsonIgnore
     @OneToOne
     @JoinColumn(name="shopId",referencedColumnName = "shopid")
     private Shop shopId;
