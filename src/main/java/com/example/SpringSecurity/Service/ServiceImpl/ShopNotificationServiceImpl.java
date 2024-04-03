@@ -54,13 +54,15 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
 
         Shop savedShop = shopRepository.save(shop);
 
+        User user = userRepository.findById(notificationDto.getUserId().getId())
+                .orElseThrow(() -> new RuntimeException("User not found for id: " + notificationDto.getUserId()));
 
         Notification notification = new Notification();
         notification.setDescription(shopDto.getDescription());
         notification.setShopId(shop);
         notification.setCategories(shopDto.getCategories());
         notification.setPhoto(shopDto.getPhoto().getBytes());
-        notification.setUser(notificationDto.getUserId());
+        notification.setUser(user);
         notification.setTitle(notificationDto.getUsername());
 
         notificationRepository.save(notification);
