@@ -33,7 +33,7 @@ public class Notification {
     @JoinColumn(name="shopId",referencedColumnName = "shopid")
     private Shop shopId;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
