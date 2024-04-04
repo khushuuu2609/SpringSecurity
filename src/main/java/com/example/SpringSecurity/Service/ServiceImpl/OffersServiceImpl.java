@@ -65,7 +65,7 @@ public class OffersServiceImpl implements OffersService {
         }
     }
 
-    @Override
+    @Transactional
     public void deleteOffersExceptOne(Long shopId, Long offerId) {
         offerRepository.deleteAllByShopIdAndIdNot(shopId, offerId);
     }

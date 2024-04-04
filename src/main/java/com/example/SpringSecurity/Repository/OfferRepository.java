@@ -15,7 +15,7 @@ public interface OfferRepository extends JpaRepository<Offers,Long>{
         List<Offers> findByUserId(Long userId);
 
         @Modifying
-        @Query(value = "DELETE FROM offers o WHERE o.shopId = :shopId AND offerId <> :offerId",nativeQuery = true)
+        @Query(value = "DELETE FROM offers WHERE shop_id = :shopId AND offer_id <> :offerId",nativeQuery = true)
         void deleteAllByShopIdAndIdNot(@Param("shopId") Long shopId, @Param("offerId") Long offerId);
 
 }
