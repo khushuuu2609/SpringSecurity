@@ -73,5 +73,12 @@ public class ShopController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/{shopId}/price")
+    public ResponseEntity<Void> updatePrice(@PathVariable Long shopId, @RequestParam Long price) {
+        shopNotificationService.updatePrice(shopId, price);
+        return ResponseEntity.noContent().build();
+    }
+
 }
 

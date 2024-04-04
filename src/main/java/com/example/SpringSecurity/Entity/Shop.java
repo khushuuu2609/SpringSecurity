@@ -31,7 +31,7 @@ public class Shop {
     @Column(nullable = false)
     private String status;
 
-    private String price;
+    private Long price;
 
     @JsonIgnore
     @ManyToOne

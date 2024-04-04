@@ -17,5 +17,6 @@ public class ShopDto {
     private String categories;
     private String description;
     private String status;
+    private Long price;
     // Getters and setters
 }
