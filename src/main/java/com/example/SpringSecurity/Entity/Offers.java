@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,15 +31,18 @@ public class Offers {
     @Column
     private  String Categories;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shop_id", referencedColumnName = "shopId")
     private Shop shop;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sellerId", referencedColumnName = "sellerId")
     private SellerReg seller;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

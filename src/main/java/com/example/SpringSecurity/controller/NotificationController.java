@@ -46,8 +46,6 @@ public class NotificationController {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
             }
 
-            System.out.println(user);
-
             String userAreaName = user.getAreaName();
             List<Notification> notifications = notificationRepository.findAll();
             List<SellerReg> sellersInUserArea = sellerRepository.findByAreaName(userAreaName);
@@ -55,7 +53,10 @@ public class NotificationController {
             List<Notification> filteredNotifications = new ArrayList<>();
             for (Notification notification : notifications) {
                 for (SellerReg seller : sellersInUserArea) {
-                    if (Arrays.asList(seller.getCategories()).contains(notification.getCategories()) && userAreaName.equals(notification.getUser().getAreaName())) {
+                    // Exclude user's own notifications if they are also a seller
+                    if (seller.getUser().getId().equals(userId) &&
+                            Arrays.asList(seller.getCategories()).contains(notification.getCategories()) &&
+                            userAreaName.equals(notification.getUser().getAreaName())) {
                         filteredNotifications.add(notification);
                         break;
                     }
