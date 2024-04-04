@@ -6,5 +6,5 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 
 public interface OffersService {
-    ResponseEntity<String> offerSending(OfferDto offerDto, NotificationDto notificationDto, HttpSession session);
+    ResponseEntity<String> offerSending(OfferDto offerDto, NotificationDto notificationDto);
 }

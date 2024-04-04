@@ -31,6 +31,8 @@ public class Shop {
     @Column(nullable = false)
     private String status;
 
+    private String price;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

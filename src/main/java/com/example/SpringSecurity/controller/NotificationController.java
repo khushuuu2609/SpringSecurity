@@ -52,8 +52,6 @@ public class NotificationController {
             List<Notification> notifications = notificationRepository.findAll();
             List<SellerReg> sellersInUserArea = sellerRepository.findByAreaName(userAreaName);
 
-            System.out.println(sellersInUserArea);
-
             List<Notification> filteredNotifications = new ArrayList<>();
             for (Notification notification : notifications) {
                 for (SellerReg seller : sellersInUserArea) {

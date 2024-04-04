@@ -36,10 +36,11 @@ public class Offers {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "seller_id", referencedColumnName = "sellerId")
+    @JoinColumn(name = "sellerId", referencedColumnName = "sellerId")
     private SellerReg seller;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
 }
