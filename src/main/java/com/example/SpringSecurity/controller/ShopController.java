@@ -48,8 +48,8 @@ public class ShopController {
         Optional<Shop> optionalShop = shopRepository.findById(shopId);
         if (optionalShop.isPresent()) {
             Shop shop = optionalShop.get();
-            if (!shop.getStatus().equals("OPEN")) {
-                return ResponseEntity.badRequest().body("Status can only be updated for orders with status OPEN");
+            if (!shop.getStatus().equals("OPEN") || !shop.getStatus().equals("IN_PROGRESS")) {
+                return ResponseEntity.badRequest().body("Status can only be updated for orders with status OPEN or IN_PROGRESS");
             }
             shop.setStatus(newStatus);
             shopRepository.save(shop);
@@ -58,6 +58,7 @@ public class ShopController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @GetMapping("shopdis/{shopId}")
     public ResponseEntity<Shop> getShopById(@PathVariable Long shopId) {
