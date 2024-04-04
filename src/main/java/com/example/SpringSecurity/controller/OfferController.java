@@ -66,4 +66,11 @@ public class OfferController {
         }
     }
 
+    @DeleteMapping("/deleteAllExceptOne")
+    public ResponseEntity<String> deleteOffersExceptOne(@RequestParam Long shopId, @RequestParam Long offerId) {
+        offersService.deleteOffersExceptOne(shopId, offerId);
+        return ResponseEntity.ok("Offers deleted except the specified one.");
+    }
+
+
 }

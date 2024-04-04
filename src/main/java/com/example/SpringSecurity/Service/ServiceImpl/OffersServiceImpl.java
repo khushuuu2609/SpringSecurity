@@ -64,4 +64,10 @@ public class OffersServiceImpl implements OffersService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process the photo");
         }
     }
+
+    @Override
+    public void deleteOffersExceptOne(Long shopId, Long offerId) {
+        offerRepository.deleteAllByShopIdAndIdNot(shopId, offerId);
+    }
+
 }
