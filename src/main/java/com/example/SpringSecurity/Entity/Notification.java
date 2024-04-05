@@ -29,6 +29,8 @@ public class Notification {
     @Column(nullable = false)
     private String categories;
 
+    private Long[] sellerIds;
+
     @OneToOne
     @JoinColumn(name="shopId",referencedColumnName = "shopid")
     private Shop shopId;
