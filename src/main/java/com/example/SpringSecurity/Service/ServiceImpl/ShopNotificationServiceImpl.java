@@ -71,7 +71,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         notification.setPhoto(shopDto.getPhoto().getBytes());
         notification.setUser(user);
         notification.setTitle(notificationDto.getUsername());
-        notification.setSellerIdArr(sellerIds); // Set the seller IDs
+        notification.setSellerIds(sellerIds); // Set the seller IDs
 
 
         notificationRepository.save(notification);

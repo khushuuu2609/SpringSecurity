@@ -60,9 +60,11 @@ public class NotificationController {
                             Arrays.asList(seller.getCategories()).contains(notification.getCategories()) &&
                             userAreaName.equals(notification.getUser().getAreaName())) {
                         // Populate sellerIdArr in the notification
+                        // Populate sellerIdArr in the notification
                         String categories = notification.getCategories();
                         String[] categoriesArray = {categories}; // Convert single string to array of strings
-                        List<Long> sellerIds = sellerRepository.findSellerIdsByAreaNameAndCategories(notification.getUser().getAreaName(), categoriesArray);                        notification.setSellerIdArr(sellerIds);
+                        List<Long> sellerIds = sellerRepository.findSellerIdsByAreaNameAndCategories(notification.getUser().getAreaName(), categoriesArray);
+                        notification.setSellerIds(sellerIds);
                         filteredNotifications.add(notification);
                         break;
                     }
