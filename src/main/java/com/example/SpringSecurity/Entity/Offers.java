@@ -31,7 +31,7 @@ public class Offers {
     @Column
     private  String Categories;
 
-    @JsonIgnore
+    
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shop_id", referencedColumnName = "shopId")
     private Shop shop;
