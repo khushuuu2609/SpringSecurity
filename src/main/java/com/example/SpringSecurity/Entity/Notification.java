@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,8 +28,6 @@ public class Notification {
 
     @Column(nullable = false)
     private String categories;
-
-    private List<Long> sellerIdArr;
 
     @OneToOne
     @JoinColumn(name="shopId",referencedColumnName = "shopid")
