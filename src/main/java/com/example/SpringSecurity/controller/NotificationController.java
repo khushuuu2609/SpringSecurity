@@ -37,6 +37,7 @@ public class NotificationController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/notifications")
     public ResponseEntity<List<Notification>> getAllNotifications(@Param("userId") Long userId) {
         try {
@@ -58,6 +59,10 @@ public class NotificationController {
                     if (seller.getUser().getId().equals(userId) &&
                             Arrays.asList(seller.getCategories()).contains(notification.getCategories()) &&
                             userAreaName.equals(notification.getUser().getAreaName())) {
+                        // Populate sellerIdArr in the notification
+                        String categories = notification.getCategories();
+                        String[] categoriesArray = {categories}; // Convert single string to array of strings
+                        List<Long> sellerIds = sellerRepository.findSellerIdsByAreaNameAndCategories(notification.getUser().getAreaName(), categoriesArray);                        notification.setSellerIdArr(sellerIds);
                         filteredNotifications.add(notification);
                         break;
                     }
@@ -70,4 +75,5 @@ public class NotificationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
+    }
+

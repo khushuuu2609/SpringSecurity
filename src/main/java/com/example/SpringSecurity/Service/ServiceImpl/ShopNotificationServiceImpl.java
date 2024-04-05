@@ -55,6 +55,14 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
 
         User user = userRepository.findById(notificationDto.getUserId().getId())
                 .orElseThrow(() -> new RuntimeException("User not found for id: " + notificationDto.getUserId()));
+        // Fetch seller IDs based on matching criteria
+        List<Long> sellerIds = sellerRepository.findSellerIdsByAreaNameAndCategories(user.getAreaName(), new String[]{shopDto.getCategories()});
+        // Print the sellerIds
+        System.out.println("Seller IDs:");
+        for (Long sellerId : sellerIds) {
+            System.out.println(sellerId);
+        }
+
 
         Notification notification = new Notification();
         notification.setDescription(shopDto.getDescription());
@@ -63,6 +71,8 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         notification.setPhoto(shopDto.getPhoto().getBytes());
         notification.setUser(user);
         notification.setTitle(notificationDto.getUsername());
+        notification.setSellerIdArr(sellerIds); // Set the seller IDs
+
 
         notificationRepository.save(notification);
 
