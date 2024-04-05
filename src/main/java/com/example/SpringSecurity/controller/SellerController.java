@@ -13,7 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = { "http://localhost:5173" },
+        allowedHeaders = "*", allowCredentials="true")
 @RestController
 @RequestMapping("/api/auth/")
 @RequiredArgsConstructor
@@ -30,7 +31,6 @@ public class SellerController {
     @Autowired
     HttpSession session;
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @PatchMapping("upgradeToSeller/{id}")
     public ResponseEntity<String> updateToSeller(@PathVariable Long id) {
         if (userService.updateToSeller(id))
@@ -39,19 +39,19 @@ public class SellerController {
             return Util.getResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+
     @PostMapping("/seller")
     public ResponseEntity<String> registerSeller(@RequestBody SellerRegDto sellerRegDto, @RequestParam Long userId) {
         return sellerRegService.sellerReg(sellerRegDto, userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+
     @GetMapping("/seller/{userId}")
     public ResponseEntity<SellerReg> getSellerProfile(@PathVariable Long userId) {
         return sellerRegService.getSellerProfile(userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+
     @PutMapping("/seller/{userId}")
     public ResponseEntity<String> updateSellerProfile(@RequestBody SellerReg sellerReg, @PathVariable Long userId) {
         return sellerRegService.updateSellerProfile(sellerReg, userId);

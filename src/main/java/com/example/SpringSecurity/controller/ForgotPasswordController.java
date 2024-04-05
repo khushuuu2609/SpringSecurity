@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = { "http://localhost:5173" },
+        allowedHeaders = "*", allowCredentials="true")
 @RestController
 @RequestMapping("/api/auth")
 public class ForgotPasswordController {

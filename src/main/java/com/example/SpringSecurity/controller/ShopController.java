@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = { "http://localhost:5173" },
+        allowedHeaders = "*", allowCredentials="true")
 @RestController
 @RequestMapping("/api/img")
 public class ShopController {
