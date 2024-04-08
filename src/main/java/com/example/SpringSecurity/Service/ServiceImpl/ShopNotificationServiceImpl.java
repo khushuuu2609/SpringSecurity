@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -49,6 +50,9 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         String open = "OPEN";
         shop.setStatus(open);
         shop.setUser(shopDto.getUserId());
+        shop.setOrderTime(LocalDateTime.now());
+        shop.setProductName(shopDto.getProductName()); // Set the product name
+
 
 
         Shop savedShop = shopRepository.save(shop);
@@ -63,6 +67,8 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         notification.setPhoto(shopDto.getPhoto().getBytes());
         notification.setUser(user);
         notification.setTitle(notificationDto.getUsername());
+notification.setOrderTime(LocalDateTime.now());
+notification.setProductName(shopDto.getProductName());
 
         notificationRepository.save(notification);
 

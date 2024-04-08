@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -50,6 +51,8 @@ public class OffersServiceImpl implements OffersService {
                     offer.setSeller(offerDto.getSellerId());
                     offer.setUser(offerDto.getUserId());
                     offer.setShop(offerDto.getShopId());
+                    offer.setOrderTime(LocalDateTime.now());
+                    offer.setProductName(offerDto.getProductName());
 
             System.out.println(offer);
 

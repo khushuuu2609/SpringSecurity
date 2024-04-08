@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class NotificationDto {
     private MultipartFile photo;
     private String categories;
     private String username;
+    private LocalDateTime orderTime;
     private User UserId;
 
 }

@@ -1,8 +1,9 @@
 package com.example.SpringSecurity.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,12 +30,18 @@ public class Notification {
     @Column(nullable = false)
     private String categories;
 
-    @OneToOne
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime orderTime;
+
+    @Column(nullable = false)
+    private String productName; // Add product name field
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="shopId",referencedColumnName = "shopid")
     private Shop shopId;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,5 +20,7 @@ public class ShopDto {
     private String description;
     private String status;
     private Long price;
-    // Getters and setters
+    private String productName;
+    private LocalDateTime orderTime;
+    // Getters and setter
 }
