@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = { "http://localhost:5173" },
+        allowedHeaders = "*", allowCredentials="true")
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -36,6 +37,7 @@ public class NotificationController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/notifications")
     public ResponseEntity<List<Notification>> getAllNotifications(@Param("userId") Long userId) {
         try {
@@ -46,8 +48,6 @@ public class NotificationController {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
             }
 
-            System.out.println(user);
-
             String userAreaName = user.getAreaName();
             List<Notification> notifications = notificationRepository.findAll();
             List<SellerReg> sellersInUserArea = sellerRepository.findByAreaName(userAreaName);
@@ -55,7 +55,16 @@ public class NotificationController {
             List<Notification> filteredNotifications = new ArrayList<>();
             for (Notification notification : notifications) {
                 for (SellerReg seller : sellersInUserArea) {
-                    if (Arrays.asList(seller.getCategories()).contains(notification.getCategories()) && userAreaName.equals(notification.getUser().getAreaName())) {
+                    // Exclude user's own notifications if they are also a seller
+                    if (seller.getUser().getId().equals(userId) &&
+                            Arrays.asList(seller.getCategories()).contains(notification.getCategories()) &&
+                            userAreaName.equals(notification.getUser().getAreaName())) {
+                        // Populate sellerIdArr in the notification
+                        // Populate sellerIdArr in the notification
+                        String categories = notification.getCategories();
+                        String[] categoriesArray = {categories}; // Convert single string to array of strings
+                        List<Long> sellerIds = sellerRepository.findSellerIdsByAreaNameAndCategories(notification.getUser().getAreaName(), categoriesArray);
+                        notification.setSellerIds(sellerIds);
                         filteredNotifications.add(notification);
                         break;
                     }
@@ -68,4 +77,5 @@ public class NotificationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
+    }
+

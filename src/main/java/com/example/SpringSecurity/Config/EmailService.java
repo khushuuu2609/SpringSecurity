@@ -14,10 +14,10 @@ import java.util.Properties;
 public class EmailService {
     public boolean sendEmail(String subject, String message, String to) {
         boolean f = false;
-        String from = "khushboodesai2609@gmail.com";
+        String from = "dhondetisha@gmail.com";
         String host = "smtp.gmail.com";
-        String username = "khushboodesai2609@gmail.com";
-        String password = "sxjt ppwc jknm xerq";
+        String username = "dhondetisha@gmail.com";
+        String password = "fqhb inul awab mnec";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host", host);

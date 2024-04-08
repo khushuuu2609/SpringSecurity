@@ -8,11 +8,14 @@ import com.example.SpringSecurity.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = { "http://localhost:5173" },
+        allowedHeaders = "*", allowCredentials="true")
 @RestController
 @RequestMapping("/api/auth")
 public class ForgotPasswordController {
@@ -32,21 +35,29 @@ public class ForgotPasswordController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/send-otp")
     public ResponseEntity<?> sendOTP(@RequestBody Map<String, String> request, HttpSession session) {
         String email = request.get("email");
-        String otp = forgotPasswordService.generateOTP();
 
-//        HttpSession session = servletRequest.getSession();
-        session.setAttribute("sessionOtp", otp);
-        session.setAttribute("useremail", email);
+        // Check if the email exists in the database
+        if (userRepository.findByEmail(email).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email not found in database.");
+        }else{
+            String otp = forgotPasswordService.generateOTP();
 
-        boolean otpSent = emailService.sendEmail("Password Reset OTP", "Your OTP is: " + otp, email);
+            session.setAttribute("sessionOtp", otp);
+            session.setAttribute("useremail", email);
 
-        if (otpSent) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send OTP.");
+            boolean otpSent = emailService.sendEmail("Password Reset OTP", "Your OTP is: " + otp, email);
+
+            if (otpSent) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send OTP.");
+            }
         }
     }
 
@@ -96,7 +107,7 @@ public class ForgotPasswordController {
         }
 
         // Update the user's password
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
         // Remove email from session to prevent reuse

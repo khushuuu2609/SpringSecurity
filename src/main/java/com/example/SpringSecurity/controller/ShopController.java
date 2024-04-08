@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = { "http://localhost:5173" },
+        allowedHeaders = "*", allowCredentials="true")
 @RestController
 @RequestMapping("/api/img")
 public class ShopController {
@@ -48,9 +49,6 @@ public class ShopController {
         Optional<Shop> optionalShop = shopRepository.findById(shopId);
         if (optionalShop.isPresent()) {
             Shop shop = optionalShop.get();
-            if (!shop.getStatus().equals("OPEN")) {
-                return ResponseEntity.badRequest().body("Status can only be updated for orders with status OPEN");
-            }
             shop.setStatus(newStatus);
             shopRepository.save(shop);
             return ResponseEntity.ok("Status updated successfully");
@@ -58,6 +56,8 @@ public class ShopController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 
     @GetMapping("shopdis/{shopId}")
     public ResponseEntity<Shop> getShopById(@PathVariable Long shopId) {
