@@ -51,8 +51,7 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         shop.setStatus(open);
         shop.setUser(shopDto.getUserId());
         shop.setOrderTime(LocalDateTime.now());
-        shop.setProductName(shopDto.getProductName()); // Set the product name
-
+        shop.setProductName(shopDto.getProductName()); // Set the product namedj
 
 
         Shop savedShop = shopRepository.save(shop);
@@ -67,8 +66,8 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
         notification.setPhoto(shopDto.getPhoto().getBytes());
         notification.setUser(user);
         notification.setTitle(notificationDto.getUsername());
-notification.setOrderTime(LocalDateTime.now());
-notification.setProductName(shopDto.getProductName());
+        notification.setOrderTime(LocalDateTime.now());
+        notification.setProductName(shopDto.getProductName());
 
         notificationRepository.save(notification);
 

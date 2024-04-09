@@ -38,12 +38,12 @@ public class Offers {
     @Column(nullable = false)
     private String productName; // Add product name field
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "shop_id", referencedColumnName = "shopId")
     private Shop shop;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "sellerId", referencedColumnName = "sellerId")
     private SellerReg seller;
 

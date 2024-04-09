@@ -1,6 +1,5 @@
 package com.example.SpringSecurity.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +40,7 @@ public class Shop {
 
     private Long price;
 
-    @JsonIgnore
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

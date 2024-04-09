@@ -22,7 +22,7 @@ public class AuthenticationController {
             allowedHeaders = "*", allowCredentials="true")
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody Signup request) {
-        return ResponseEntity.ok(authenticationService.signup(request)); // Assuming "register_success" is a success message or page
+        return ResponseEntity.ok(authenticationService.signup(request));
     }
 
     @PostMapping("/signin")
