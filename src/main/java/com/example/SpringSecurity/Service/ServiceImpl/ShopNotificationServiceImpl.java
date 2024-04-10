@@ -11,8 +11,10 @@ import com.example.SpringSecurity.Repository.ShopRepository;
 import com.example.SpringSecurity.Repository.UserRepository;
 import com.example.SpringSecurity.Service.JwtService;
 import com.example.SpringSecurity.Service.ShopNotificationService;
+import com.example.SpringSecurity.utils.Util;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -84,6 +86,16 @@ public class ShopNotificationServiceImpl implements ShopNotificationService {
     @Transactional
     public void updatePrice(Long shopId, Long price) {
         shopRepository.updatePrice(shopId, price);
+    }
+
+
+
+    // other methods...
+
+    @Override
+    public Boolean deleteNotificationsByShopId(Long shopId) {
+        notificationRepository.deleteByShopId(shopId);
+        return true;
     }
 
 

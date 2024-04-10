@@ -6,16 +6,15 @@ import com.example.SpringSecurity.Entity.SellerReg;
 import com.example.SpringSecurity.Entity.User;
 import com.example.SpringSecurity.Repository.NotificationRepository;
 import com.example.SpringSecurity.Repository.SellerRepository;
+import com.example.SpringSecurity.Service.ShopNotificationService;
 import com.example.SpringSecurity.Service.UserService;
+import com.example.SpringSecurity.utils.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +36,8 @@ public class NotificationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ShopNotificationService shopNotificationService;
 
     @GetMapping("/notifications")
     public ResponseEntity<List<Notification>> getAllNotifications(@Param("userId") Long userId) {
@@ -72,5 +73,14 @@ public class NotificationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @DeleteMapping("/deleteByShopId/{shopId}")
+    public ResponseEntity<String> deleteNotificationsByShopId(@PathVariable Long shopId) {
+
+        if(shopNotificationService.deleteNotificationsByShopId(shopId))
+        {
+            return Util.getResponseEntity("Notification deleted successfully", HttpStatus.OK);
+        }
+        return Util.getResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
 

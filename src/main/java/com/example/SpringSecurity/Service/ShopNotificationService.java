@@ -4,6 +4,7 @@ import com.example.SpringSecurity.Dao.Request.NotificationDto;
 import com.example.SpringSecurity.Dao.Request.ShopDto;
 import com.example.SpringSecurity.Entity.Shop;
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,4 +16,6 @@ public interface ShopNotificationService {
 
     @Transactional
     void updatePrice(Long shopId, Long price);
+
+    Boolean deleteNotificationsByShopId(Long shopId);
 }
