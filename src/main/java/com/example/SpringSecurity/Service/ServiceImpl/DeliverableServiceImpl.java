@@ -6,6 +6,8 @@ import com.example.SpringSecurity.Service.DeliverableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DeliverableServiceImpl implements DeliverableService {
 
@@ -24,6 +26,11 @@ public class DeliverableServiceImpl implements DeliverableService {
         deliverables.setSeller(seller);
         deliverables.setOffer(offer);
         return deliverablesRepository.save(deliverables);
+    }
+
+    @Override
+    public List<Deliverables> getDeliverablesBySellerId(SellerReg sellerId) {
+        return deliverablesRepository.findBySeller(sellerId);
     }
 
 

@@ -5,6 +5,8 @@ import com.example.SpringSecurity.Service.DeliverableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = { "http://localhost:5173" },
         allowedHeaders = "*", allowCredentials="true")
 @RestController
@@ -25,5 +27,11 @@ public class DeliverableController {
             @RequestParam SellerReg sellerId,
             @RequestParam Offers offerId) {
         return deliverableService.saveDeliverables(userId, shopId, sellerId, offerId);
+    }
+
+
+    @GetMapping("/seller/{sellerId}")
+    public List<Deliverables> getDeliverablesBySellerId(@PathVariable SellerReg sellerId) {
+        return deliverableService.getDeliverablesBySellerId(sellerId);
     }
 }
