@@ -93,27 +93,26 @@ public class ForgotPasswordController {
         var email = session.getAttribute("useremail");
         System.out.println("Email: of the user"+email);
 
-        // Check if email is null (not stored in session) or empty
         if (email == null ) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email not found in session.");
         }
 
-        // Find the user by email in your database
-        User user = userService.findByEmail((String) email);
 
-        // Check if user exists
-        if (user == null) {
+        User user = userService.findByEmail((String) email);
+     if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
-        // Update the user's password
+
+        if (passwordEncoder.matches(newPassword, user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password cannot be the same as the old password.");
+        }
+
+
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        // Remove email from session to prevent reuse
         session.removeAttribute("email");
-
-        // Return a success response
-        return ResponseEntity.ok("Password reset successfully.");
+        return ResponseEntity.ok("Password updated successfully.");
     }
 }
