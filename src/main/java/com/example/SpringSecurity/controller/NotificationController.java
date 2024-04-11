@@ -62,9 +62,13 @@ public class NotificationController {
                         break;
                     }
                 }
-                if (!isSellerOwnNotification &&
-                        userAreaName.equals(notification.getUser().getAreaName())) {
-                    filteredNotifications.add(notification);
+                for (SellerReg seller : sellersInUserArea) {
+                    if (!isSellerOwnNotification && seller.getUser().getId().equals(userId) &&
+                            Arrays.asList(seller.getCategories()).contains(notification.getCategories()) &&
+                            userAreaName.equals(notification.getUser().getAreaName())) {
+
+                        filteredNotifications.add(notification);
+                    }
                 }
             }
 
