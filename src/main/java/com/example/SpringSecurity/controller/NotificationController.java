@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:5173" },
-        allowedHeaders = "*", allowCredentials="true")
+@CrossOrigin(origins = {"http://localhost:5173"},
+        allowedHeaders = "*", allowCredentials = "true")
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -55,15 +55,16 @@ public class NotificationController {
 
             List<Notification> filteredNotifications = new ArrayList<>();
             for (Notification notification : notifications) {
+                boolean isSellerOwnNotification = false;
                 for (SellerReg seller : sellersInUserArea) {
-                    // Exclude user's own notifications if they are also a seller
-                    if (seller.getUser().getId().equals(userId) &&
-                            Arrays.asList(seller.getCategories()).contains(notification.getCategories()) &&
-                            userAreaName.equals(notification.getUser().getAreaName())) {
-
-                        filteredNotifications.add(notification);
+                    if (notification.getUser().getId().equals(userId)) {
+                        isSellerOwnNotification = true;
                         break;
                     }
+                }
+                if (!isSellerOwnNotification &&
+                        userAreaName.equals(notification.getUser().getAreaName())) {
+                    filteredNotifications.add(notification);
                 }
             }
 
@@ -73,11 +74,12 @@ public class NotificationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
     @DeleteMapping("/deleteByShopId/{shopId}")
     public ResponseEntity<String> deleteNotificationsByShopId(@PathVariable Long shopId) {
 
-        if(shopNotificationService.deleteNotificationsByShopId(shopId))
-        {
+        if (shopNotificationService.deleteNotificationsByShopId(shopId)) {
             return Util.getResponseEntity("Notification deleted successfully", HttpStatus.OK);
         }
         return Util.getResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
